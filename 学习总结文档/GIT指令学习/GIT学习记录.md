@@ -44,12 +44,33 @@
     Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。  
     **git merge --no-ff -m "merge with no-ff" dev**  
 
-    在master分支上修复的bug，想要合并到当前dev分支，可以用git cherry-pick <commit>命令，把bug提交的修改“复制”到当前分支，避免重复劳动。  
+    在master分支上修复的bug，想要合并到当前dev分支，可以用git cherry-pick <commit>命令，把bug提交的修改“复制”到当前分支，避免重复劳动。
+    
     **$ git branch  
-        * dev  
-          master  
+          * dev  
+            master  
         $ git cherry-pick 4c805e2**  
 
   - ## 解决冲突
-      使用git status查看冲突内容，手动修改冲突后重新git add + commit 提交修改。
-  
+      先用git pull把最新的提交从origin/dev抓下来，然后，在本地合并，解决冲突，再推送。
+      **$ git pull**
+      **$ git commit -m "fix env conflict"**
+      **$ git push origin dev**
+    
+  - ## 多人协作
+    当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin。  
+    推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上。  
+    **$ git push origin master**  
+    
+    如果要推送其他分支，比如dev，就改成
+    **$ git push origin dev**
+
+    克隆远程代码仓库
+    **$ git clone git@github.com:michaelliao/learngit.git**
+
+    要在dev分支上开发，就必须创建远程origin的dev分支到本地，于是他用这个命令创建本地dev分支
+    **$ git checkout -b dev origin/dev**
+
+    把dev分支push到远程
+    **$ git push origin dev** 
+
