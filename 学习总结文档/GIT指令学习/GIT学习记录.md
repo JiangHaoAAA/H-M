@@ -23,4 +23,33 @@
   **$ git reset HEAD readme.txt**
 
 - ## 分支管理
+  - ## 创建与分支合并
+    创建dev分支，然后切换到dev分支
+    
+    **git checkout -b dev**
+
+    git checkout命令加上-b参数表示创建并切换，相当于以下两条命令：
+
+    **$ git branch dev**
+    **$ git checkout dev**
+
+    用git branch命令可以查看仓库中有哪些分支和当前在哪个分支之中。此时使用git commit等命令所提交的修改就会提交到当前分支之中。
+
+    使用如下指令进行不同分支之间的切换。  
+    **$git checkout master**
+
+    此时可以把dev分支之中的内容合并到master分支上来， git merge命令用于合并指定分支到当前分支。  
+    **$ git merge dev**
+
+    Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。  
+    **git merge --no-ff -m "merge with no-ff" dev**  
+
+    在master分支上修复的bug，想要合并到当前dev分支，可以用git cherry-pick <commit>命令，把bug提交的修改“复制”到当前分支，避免重复劳动。  
+    **$ git branch  
+        * dev  
+          master  
+        $ git cherry-pick 4c805e2**  
+
+  - ## 解决冲突
+      使用git status查看冲突内容，手动修改冲突后重新git add + commit 提交修改。
   
